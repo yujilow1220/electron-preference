@@ -36,30 +36,23 @@ var Item = React.createClass({
           <div className="panel-title ">{this.props.item.name}</div>
         </div>
         <div className="content-box-large box-with-header">
-          {this.props.item.description}
+          {this.props.item.description}<br />
+          {this.props.item.type}
         </div>
       </div>
     )
   }
 });
 
-var Contents = React.createClass({
-  render: function(){
-    var items = this.props.items.map(function(item){
-      return <Item item={item} />
-    });
-    return (
-      <div>{items}</div>
-
-    );
-  }
-})
 var Body = React.createClass({
   propTypes:{
     current: React.PropTypes.number.isRequired
   },
   getInitialState: function(){return null},
   render: function(){
+    const items = preference[this.props.current].items.map(function(item){
+      return <Item item={item} />
+    });
     return (
       <div className="page-content">
       	<div className="row">
@@ -68,7 +61,7 @@ var Body = React.createClass({
     		  </div>
     		  <div className="col-md-10">
     		  	<div className="row">
-                <Contents items={preference[this.props.current].items} />
+                {items}
     		  	</div>
           </div>
         </div>
