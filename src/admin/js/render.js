@@ -7,18 +7,16 @@ var fs = require('fs');
 const storage = require('electron-json-storage');
 const remote = require('electron').remote;
 const preference = remote.require('./preference.json');
-var current = 0;
+const ClassNames = require('classnames');
 
-
-
-// var main = remote.require('./main');
 
 var Sidebar = React.createClass({
   getInitialState: function(){return null},
   handleChange: function(){return null},
   render:function(){
+    const current = this.props.current;
     const lists = preference.map(function(e,i){
-      return <li className=""><a>{e.name}</a></li>
+      return <li className={ClassNames({current:(current == i)})}><a>{e.name}</a></li>
     })
     return (
 		  	<div className="sidebar content-box" style={{display: "block"}}>
@@ -30,23 +28,30 @@ var Sidebar = React.createClass({
   }
 });
 
-var Contents = React.createClass({
-  render: function(){
+var Item = React.createClass({
+  render:function(){
     return (
       <div className="col-md-12 panel-warning">
         <div className="content-box-header panel-heading">
-          <div className="panel-title ">name</div>
-
-        <div className="panel-options">
-          <a href="#" data-rel="collapse"><i className="glyphicon glyphicon-refresh"></i></a>
-          <a href="#" data-rel="reload"><i className="glyphicon glyphicon-cog"></i></a>
-        </div>
+          <div className="panel-title ">{this.props.item.name}</div>
         </div>
         <div className="content-box-large box-with-header">
-          This is content
+          {this.props.item.description}
         </div>
       </div>
     )
+  }
+});
+
+var Contents = React.createClass({
+  render: function(){
+    var items = this.props.items.map(function(item){
+      return <Item item={item} />
+    });
+    return (
+      <div>{items}</div>
+
+    );
   }
 })
 var Body = React.createClass({
@@ -59,11 +64,11 @@ var Body = React.createClass({
       <div className="page-content">
       	<div className="row">
     		  <div className="col-md-2">
-            <Sidebar />
+            <Sidebar current={this.props.current}/>
     		  </div>
     		  <div className="col-md-10">
     		  	<div className="row">
-                <Contents />
+                <Contents items={preference[this.props.current].items} />
     		  	</div>
           </div>
         </div>
@@ -74,5 +79,5 @@ var Body = React.createClass({
 
 
 // ReactDOM.render(<Sidebar />, document.getElementById('sidebar'));
-ReactDOM.render(<Body />, document.getElementById('body'));
+ReactDOM.render(<Body current="0" />, document.getElementById('body'));
 // ReactDOM.render(<Contents />, document.getElementById('contents'));

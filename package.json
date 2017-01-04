@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/yujilow1220/electron-preference#readme",
   "dependencies": {
+    "classnames": "^2.2.5",
     "electron": "^1.4.6",
     "electron-json-storage": "^2.1.0",
     "restler": "^3.4.0"
