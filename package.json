@@ -1,0 +1,29 @@
+{
+  "name": "electron-preference",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yujilow1220/electron-preference.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yujilow1220/electron-preference/issues"
+  },
+  "homepage": "https://github.com/yujilow1220/electron-preference#readme",
+  "dependencies": {
+    "electron": "^1.4.6",
+    "electron-json-storage": "^2.1.0",
+    "restler": "^3.4.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "electron": "^1.4.6",
+    "mocha": "^2.5.3"
+  }
+}
