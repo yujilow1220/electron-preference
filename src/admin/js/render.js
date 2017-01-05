@@ -36,11 +36,11 @@ var Item = React.createClass({
     return (
       <div className="col-md-12 panel-warning">
         <div className="content-box-header panel-heading">
-          <div className="panel-title ">{this.props.item.name}</div>
+          <div className="panel-title ">{this.props.item.text || this.props.item.name}</div>
         </div>
         <div className="content-box-large box-with-header">
-          {this.props.item.description}<br />
-          <input name={this.props.item.name} className={this.props.item.type} type={this.props.item.type} onChange={this.props.onChangedValue}/>
+          <p>{this.props.item.description}</p>
+          <input value={this.props.val} checked={this.props.val} name={this.props.item.name} className={ClassNames({'form-control':(this.props.item.type !== 'checkbox')})} type={this.props.item.type} onChange={this.props.onChangedValue}/>
         </div>
       </div>
     )
@@ -51,18 +51,15 @@ var Body = React.createClass({
   getInitialState: function(){
     return {
       current:0,
-      app_preference:{}
+      app_preference:this.props.app_preference
     }
   },
-  componentDidMount: function(){
-    const self = this;
-    storage.get('config', function (error, data) {
+  apply: function(){
+    storage.set('config', this.state.app_preference, function(error){
       if (error) throw error;
-      self.setState({
-        app_preference: data
-      });
+      console.log("success");
     });
-	},
+  },
   onClickTab: function(key){
     this.setState({
       current:key.currentTarget.getAttribute('data-position')
@@ -88,14 +85,16 @@ var Body = React.createClass({
   },
   render: function(){
     const self = this;
-    const items = tabs[this.state.current].items.map(function(item, i){
-      return <Item item={item} key={i} onChangedValue={self.onChangedValue} />
+    const items = this.props.tabs[this.state.current].items.map(function(item, i){
+      const val = self.state.app_preference[self.props.tabs[self.state.current].name][item.name];
+      return <Item val={val} item={item} key={i} onChangedValue={self.onChangedValue} />
     });
     return (
       <div className="page-content">
       	<div className="row">
     		  <div className="col-md-2">
             <Sidebar current={this.state.current} onClickTab={this.onClickTab}/>
+            <button className="btn" onClick={this.apply}>apply</button>
     		  </div>
     		  <div className="col-md-10">
     		  	<div className="row">
@@ -107,8 +106,7 @@ var Body = React.createClass({
     )
   }
 });
-
-
-// ReactDOM.render(<Sidebar />, document.getElementById('sidebar'));
-ReactDOM.render(<Body />, document.getElementById('body'));
-// ReactDOM.render(<Contents />, document.getElementById('contents'));
+storage.get('config', function (error, data) {
+  if (error) throw error;
+  ReactDOM.render(<Body app_preference={data} tabs={tabs}/>, document.getElementById('body'));
+});

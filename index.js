@@ -31,7 +31,15 @@ module.exports = {
 }
 
 function init_default_conf(tabs){
-  storage.set('config', tabs, function(error){
+  var default_values = {};
+  tabs.forEach(function(tab){
+    var tabName = tab.name;
+    default_values[tabName] = {};
+    tab.items.forEach(function(conf){
+      default_values[tabName][conf.name] = conf.default || null;
+    });
+  })
+  storage.set('config', default_values, function(error){
     if (error) throw error;
   });
 }
