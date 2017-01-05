@@ -94,7 +94,7 @@ var Body = React.createClass({
       	<div className="row">
     		  <div className="col-md-2">
             <Sidebar current={this.state.current} onClickTab={this.onClickTab}/>
-            <button className="btn" onClick={this.apply}>apply</button>
+            <button className="btn btn-success" onClick={this.apply}>apply</button>
     		  </div>
     		  <div className="col-md-10">
     		  	<div className="row">
