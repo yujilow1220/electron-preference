@@ -15,35 +15,43 @@ You need make a JSON-defined column into your electron-application project folde
 
 For example:
 
-```
-{
-  "Tab1":{
-    "checkbox1":{
+```preference.json
+[
+  {
+    "name":"Tab1",
+    "items":[
+    {
+      "name":"checkbox1",
       "text":"checkbox1",
       "description":"Please check if you are lucky!",
       "type":"checkbox",
       "default":"true"
     },
-    "text1":{
+    {
+      "name":"text1",
       "text": "first name",
       "description":"Your First Name",
       "type": "text",
       "default":"takuya"
     },
-    "text2":{
+    {
+      "name":"text2",
       "text":"last name",
       "description":"Your Last Name",
       "type": "text",
       "default":"takahashi"
-    }
-  },
-  "Tab2":{
-    "birthday":{
-      "type":"date",
-      "default":"1992/12/20"
-    }
+    }]
+  },{
+    "name":"Tab2",
+    "items":[
+      {
+        "name":"birthday",
+        "type":"date",
+        "default":"1992-12-20"
+      }
+    ]
   }
-}
+]
 ```
 
 Only text, checkbox, date are supported so far.
